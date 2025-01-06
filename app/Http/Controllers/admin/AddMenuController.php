@@ -47,7 +47,6 @@ class AddMenuController extends Controller
        $status_flag=1;
        // Use database transaction
        DB::beginTransaction();
-       dd("inn");
        try {
            // Retrieve validated data
            $data=[

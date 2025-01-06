@@ -49,5 +49,7 @@ Route::prefix('admin')->group(function () {
 });
 Route::resource('ecommerce_dashboard',EcommerceController::class);
 
+    });
+
 
 });
