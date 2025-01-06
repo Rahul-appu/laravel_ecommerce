@@ -2,6 +2,7 @@
 use App\Http\Controllers\admin\AddMenuController;
 use App\Http\Controllers\Admin\common_fntion;
 use App\Http\Controllers\admin\EcommerceController;
+use App\Http\Controllers\admin\ProductImageController;
 use App\Http\Controllers\Admin\ModulesController;
 use App\Http\Controllers\Auth\LoginRegisterController;
 use Illuminate\Support\Facades\Route;
@@ -42,9 +43,11 @@ Route::prefix('admin')->group(function () {
     Route::resource('modules', ModulesController::class);
     Route::post('get_menu',  'App\Http\Controllers\Admin\common_fntion@get_menu1');
     Route::resource('add_menu',AddMenuController::class);
-    Route::resource('ecommerce_dashboard',EcommerceController::class);
+    Route::resource('product_image',ProductImageController::class);
 
-    });
+    
+});
+Route::resource('ecommerce_dashboard',EcommerceController::class);
 
 
 });
