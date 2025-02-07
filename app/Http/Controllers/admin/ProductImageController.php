@@ -4,6 +4,8 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProductImageController extends Controller
 {
@@ -36,83 +38,82 @@ class ProductImageController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $err = 0;
-    $msg = "";
-    $status_flag = 1;
-
-    // Use database transaction
-    DB::beginTransaction();
-    try {
-        // Validate the request
-        $validated = $request->validate([
-            'product_name' => 'required',
-            'product_desc' => 'required',
-            'file' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048', // Image validation
-        ]);
-
-        // Check if file exists in the request
-        if ($request->hasFile('file')) {
-            $image = $request->file('file');  // Use the correct input name here
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
+    {
+        //
+        $err=0;
+        $msg="";
+        $status_flag=1;
+        // Use database transaction
+        DB::beginTransaction();
+        try {
+            // Retrieve validated data
+            if ($request->hasFile('files')) {
+                $image = $request->file('files')[0]; // Access the first file
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads'), $imageName); // Store the image in the 'uploads' folder
+                // Save image path to the database
+                $imagePath = 'public/uploads/' . $imageName;
+                $data=[
+                    'product_name' =>$request->product_name,
+                    'product_desc' =>$request->product_desc,
+                    'image_path' =>$imagePath,
+                ];
+                $rules = [
+                    'product_name' => 'required',
+                    'product_desc' => 'required',
+                    'image_path' => 'required', // Validate MIME type and size
+     
+                ];
+                // Create a validator instance
+                $validator = Validator::make($data, $rules);
             
-            // Move image to 'uploads' folder
-            $image->move(public_path('uploads'), $imageName);
-
-            // Image path relative to 'public' directory
-            $imagePath = 'uploads/' . $imageName;
-
-            // Prepare data for database insertion
-            $data = [
-                'product_name' => $request->product_name,
-                'product_desc' => $request->product_desc,
-                'image_path' => $imagePath,  // Store the image path
-            ];
-    dd($data);
-
-
-            // Insert the data into the 'product' table
-            $saved = DB::table('public.product')->insert($data);
-
-            if ($saved) {
-                $err = 0;
-                $msg = "Saved successfully";
-            } else {
-                $err = 1;
-                $msg = "Error in saving records";
+                // Check if validation fails
+                if ($validator->fails()) {
+                    // Return validation errors as JSON response
+                    return response()->json([
+                        'err' => 1,
+                        'message' => $validator->errors()->first(),
+                    ]);
+                }else{
+                    // $serializedData = serialize($data);
+                    $saved=DB::table('public.product')->insert($data);
+                    if($saved){
+                        $err=0;
+                        $msg="saved successfully";
+                    }else{
+                        $err=1;
+                        $msg="Error in saving Records";
+                    }
+        
+                }
+            
+                if ($err == 0) {
+                    // Commit transaction
+                    DB::commit();
+                    return response()->json([
+                        'err' => $err,
+                        'msg' =>$msg,
+                    ]);          
+                } else {
+                    // Rollback transaction if operation fails
+                    DB::rollback();
+                    return response()->json([
+                        'err' => $err,
+                        'msg' =>$msg,
+                    ]);
+                }
+            }else{
+                $err=1;
+                $msg="please upload  the image";
             }
-
-            // Commit transaction if everything is fine
-            if ($err == 0) {
-                DB::commit();
-                return response()->json([
-                    'err' => $err,
-                    'msg' => $msg,
-                ]);
-            } else {
-                // Rollback if there is an error
-                DB::rollback();
-                return response()->json([
-                    'err' => $err,
-                    'msg' => $msg,
-                ]);
-            }
-        } else {
-            // Handle case where no image was uploaded
-            $err = 1;
-            $msg = "Please upload the image";
-            return response()->json([
-                'err' => $err,
-                'msg' => $msg,
-            ]);
+    
+    
+        } catch (\Exception  $e) {
+            // Rollback transaction on model not found exception
+            DB::rollback();
+            return response()->json(['error' => $e->getMessage()]);
         }
-
-    } catch (\Exception $e) {
-        // Rollback transaction on exception
-        DB::rollback();
-        return response()->json(['error' => $e->getMessage()]);
     }
-}
 
 
     /**

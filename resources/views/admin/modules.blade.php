@@ -70,8 +70,6 @@
             { data: 'status', name: 'status' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false }
         ],
-        language: {
-            processing: '<div style="display: flex; align-items: center; justify-content: center; height: 100%;"><i class="fa fa-spinner fa-spin" style="font-size: 24px; color: #007bff;"></i><span style="margin-left: 10px; font-size: 18px; color: #007bff;">Loading...</span></div>'        }
     });
 });
 

@@ -52,4 +52,3 @@ Route::resource('ecommerce_dashboard',EcommerceController::class);
     });
 
 
-});

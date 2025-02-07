@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+    <style>
+        .sidebar-mini.sidebar-collapse .nav-sidebar .nav-item > .nav-link p {
+        display: none !important; /* Fix label visibility */
+    }
+    
+    </style>
+    
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +33,7 @@
         
         <!-- Sidebar -->
         @include('auth.sidebar')
+        @include('admin.preloader')
         
         <!-- Content Wrapper -->
         <div class="content-wrapper">

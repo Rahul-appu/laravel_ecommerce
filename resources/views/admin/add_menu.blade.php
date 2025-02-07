@@ -105,12 +105,7 @@
         { data: 'path', name: 'path' },
         { data: 'actions', name: 'actions', orderable: false, searchable: false }
     ],
-    language: {
-        processing: `
-            <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column;">
-                <i class="fa fa-spinner fa-spin" style="font-size: 40px; color: #007bff; margin-bottom: 15px;"></i>
-            </div>
-        `    }
+  
 });
 });
 
