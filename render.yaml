@@ -1,0 +1,28 @@
+services:
+  - name: laravel-ecommerce
+    runtime: php
+    buildCommand: |
+      curl -sS https://getcomposer.org/installer | php
+      mv composer.phar /usr/local/bin/composer
+      composer install --no-dev --optimize-autoloader
+      php artisan key:generate
+      php artisan config:cache
+      php artisan route:cache
+      php artisan migrate --force
+    startCommand: |
+      php-fpm -D && nginx -g "daemon off;"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: your-postgresql-host
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: your-db-name
+      - key: DB_USERNAME
+        value: your-db-user
+      - key: DB_PASSWORD
+        value: your-db-password
