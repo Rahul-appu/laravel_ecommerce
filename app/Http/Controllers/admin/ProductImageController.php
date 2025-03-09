@@ -19,7 +19,6 @@ class ProductImageController extends Controller
             // if($request->ajax()){
             //     return $this->getGrid();
             // }
-           
             return view('admin.product_image');
         }else{
             return view('auth.login');

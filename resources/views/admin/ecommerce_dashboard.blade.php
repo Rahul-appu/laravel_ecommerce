@@ -179,6 +179,88 @@
     @media only screen and (max-width: 300px) {
       .prev, .next,.text {font-size: 11px}
     }
+    .carousel-inner {
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds shadow */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 500px; /* Adjust based on preference */
+    object-fit: cover; /* Ensures images cover the area neatly */
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item:hover img {
+    transform: scale(1.02); /* Slight zoom effect on hover */
+}
+
+/* Overlay gradient for better text readability */
+.carousel-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+    z-index: 1;
+}
+
+/* Navigation arrow customization */
+.carousel-control-prev, 
+.carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev i, 
+.carousel-control-next i {
+    font-size: 30px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+}
+
+.carousel-control-prev i:hover, 
+.carousel-control-next i:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* Dots indicator styling */
+.carousel-indicators li {
+    background-color: #888;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+}
+
+.carousel-indicators .active {
+    background-color: #f39c12;
+}
+.custom-background {
+    background-color: #2c3e50; /* Professional dark blue-gray */
+    color: white; /* Ensures text contrast */
+    border-radius: 10px; /* Smooth rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+    height: 300px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out; /* Smooth color transition */
+}
+
+/* Hover effect for interactivity */
+.custom-background:hover {
+    background-color: #34495e; /* Slightly lighter shade on hover */
+}
+
   </style>
 </head>
 <link rel="stylesheet" href="https://adminlte.io/themes/v3/dist/css/adminlte.min.css">
@@ -195,43 +277,57 @@
 
 
 <body>
-  <header>
-    <div class="header-content">
-      <div>
-        <i class="fa fa-shopping-cart rotate-custom" aria-hidden="true"></i>
-        <span class="ecommerce-text">Ecommerce</span>
-      </div>
-      <div class="search-container">
-        <input type="text" class="search-box" placeholder="Search...">
-        <i class="fa fa-search search-icon"></i>
-      </div>
-      <div class="nav-container">
-        <label class="nav-label">Home</label>
-        <label class="nav-label">About Us</label>
-      </div>
+  <header style="position: fixed; top: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); padding: 10px 0; z-index: 1000; transition: all 0.3s ease-in-out; box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);">
+    <div style="display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+        
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 1.8rem; color: #ff6f61; animation: rotateCart 1.5s infinite ease-in-out;"></i>
+            <span style="font-size: 1.5rem; font-weight: bold; color: white; letter-spacing: 1px;">Ecommerce</span>
+        </div>
+        
+        <div style="position: relative;">
+            <input type="text" placeholder="Search..." style="padding: 10px 15px; border-radius: 25px; border: none; outline: none; width: 250px; background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(5px); color: white; font-size: 1rem; transition: 0.3s;">
+            <i class="fa fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: white; font-size: 1.2rem; cursor: pointer;"></i>
+        </div>
+        
+        <div style="display: flex; gap: 20px;">
+            <label style="color: white; font-size: 1.1rem; cursor: pointer; transition: 0.3s; font-weight: 500; margin-right: 10px;" onmouseover="this.style.color='#ff6f61'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='white'; this.style.transform='scale(1)';">Home</label>
+            <label style="color: white; font-size: 1.1rem; cursor: pointer; transition: 0.3s; font-weight: 500;" onmouseover="this.style.color='#ff6f61'; this.style.transform='scale(1.1)';" onmouseout="this.style.color='white'; this.style.transform='scale(1)';">About Us</label>
+        </div>
     </div>
-  </header>
+</header>
 
-  {{-- <div class="slideshow-container">
-    <div class="mySlides fade">
-      <div class="numbertext">1 / 3</div>
-      <img src="https://i.pinimg.com/1200x/84/c4/3f/84c43fc4eb506dff646ebcd1ebc9e4e5.jpg" width="1500" height="700">       
-      <div class="text">Caption Text</div>
-    </div>
-    <div class="mySlides fade">
-      <div class="numbertext">2 / 3</div>
-      <img src="https://img.freepik.com/free-psd/sales-banner-template-with-image_23-2148149654.jpg" width="1500" height="700">
-            <div class="text">Caption Two</div>
-    </div>
-    <div class="mySlides fade">
-      <div class="numbertext">3 / 3</div>
-      <img src="https://webbytemplate.com/_next/image?url=https%3A%2F%2Fwebby-template-dot-com.s3.eu-north-1.amazonaws.com%2Fassets%2F1097066529.jpg&w=2048&q=75" width="1500" height="700">
-            <div class="text">Caption Three</div>
-    </div>
+<script>
+    // Cart Rotation Animation
+    let cartIcon = document.querySelector('.fa-shopping-cart');
+    setInterval(() => {
+        cartIcon.style.transform = 'rotate(-10deg)';
+        setTimeout(() => { cartIcon.style.transform = 'rotate(10deg)'; }, 300);
+        setTimeout(() => { cartIcon.style.transform = 'rotate(0deg)'; }, 600);
+    }, 1500);
+</script>
 
-    <a class="prev" onclick="plusSlides(-1)">❮</a>
-    <a class="next" onclick="plusSlides(1)">❯</a>
-  </div> --}}
+<div class="card-body" style="position: relative; height: 300px; display: flex; align-items: center; justify-content: center; overflow: hidden;background-color:black;">
+  <div class="mbr-overlay" style="
+      position: absolute; 
+      top: 0; left: 0; 
+      width: 100%; height: 100%;
+      background: url('{{ asset('banner/ban1.jpg') }}') center/cover no-repeat;
+      opacity: 0.8;
+      filter: brightness(50%);
+  "></div>
+  
+  <h2 style="
+      position: relative; 
+      z-index: 2; 
+      color: white; 
+      font-size: 2rem; 
+      font-weight: bold;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  ">Enjoy Your Online Shopping With Us .......</h2>
+</div>
+
+ 
   <div class="card-body">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
@@ -241,10 +337,10 @@
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item">
-          <img class="d-block w-100" src="https://i.pinimg.com/1200x/84/c4/3f/84c43fc4eb506dff646ebcd1ebc9e4e5.jpg" alt="First slide">
+          <img class="d-block w-100" src="{{ asset('banner/temp.jpg') }}" alt="First slide">
         </div>
         <div class="carousel-item">
-          <img class="d-block w-100" src="https://img.freepik.com/free-psd/sales-banner-template-with-image_23-2148149654.jpg" alt="Second slide">
+          <img class="d-block w-100" src="{{ asset('banner/temp2.jpg') }}"  alt="Second slide">
         </div>
         <div class="carousel-item active">
           <img class="d-block w-100" src="https://webbytemplate.com/_next/image?url=https%3A%2F%2Fwebby-template-dot-com.s3.eu-north-1.amazonaws.com%2Fassets%2F1097066529.jpg&w=2048&q=75" alt="Third slide">
@@ -264,82 +360,81 @@
       </a>
     </div>
   </div>
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-12 col-lg-6 col-xl-4">
-        <div class="card mb-2 bg-gradient-dark">
-          <img class="card-img-top" src="../dist/img/photo1.png" alt="Dist Photo 1">
-          <div class="card-img-overlay d-flex flex-column justify-content-end">
-            <h5 class="card-title text-primary text-white">Card Title</h5>
-            <p class="card-text text-white pb-2 pt-1">Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do eiusmod tempor.</p>
-            <a href="#" class="text-white">Last update 2 mins ago</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 col-lg-6 col-xl-4">
-        <div class="card mb-2">
-          <img class="card-img-top" src="../dist/img/photo2.png" alt="Dist Photo 2">
-          <div class="card-img-overlay d-flex flex-column justify-content-center">
-            <h5 class="card-title text-white mt-5 pt-2">Card Title</h5>
-            <p class="card-text pb-2 pt-1 text-white">
-              Lorem ipsum dolor sit amet, <br>
-              consectetur adipisicing elit <br>
-              sed do eiusmod tempor.
-            </p>
-            <a href="#" class="text-white">Last update 15 hours ago</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12 col-lg-6 col-xl-4">
-        <div class="card mb-2">
-          <img class="card-img-top" src="../dist/img/photo3.jpg" alt="Dist Photo 3">
-          <div class="card-img-overlay">
-            <h5 class="card-title text-primary">Card Title</h5>
-            <p class="card-text pb-1 pt-1 text-white">
-              Lorem ipsum dolor <br>
-              sit amet, consectetur <br>
-              adipisicing elit sed <br>
-              do eiusmod tempor. </p>
-            <a href="#" class="text-primary">Last update 3 days ago</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+ 
+
 
   <div style="text-align:center">
     <span class="dot" onclick="currentSlide(1)"></span> 
     <span class="dot" onclick="currentSlide(2)"></span> 
     <span class="dot" onclick="currentSlide(3)"></span> 
   </div>
+  <div class="card" style="border: none; background-color: #f8f9fa;">
+    <h2 style="text-align: center; font-size: 2rem; font-weight: bold; color: #ff6f61; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);">
+      🛍️ Product List 🛍️
+  </h2>
+    <div class="card-body">
+      @foreach ($product_details->chunk(3) as $chunk)
+          <div class="row">
+              @foreach ($chunk as $product)
+                  <div class="col-md-12 col-lg-6 col-xl-4">
+                      <div class="card product-card" style="display: flex; flex-direction: column; height: 100%; border-radius: 15px; overflow: hidden; background: linear-gradient(135deg, #fdfbfb, #ebedee); box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease-in-out;">
+                          
+                          <img class="card-img-top product-image" src="{{ asset('uploads/' . basename($product->image_path)) }}" alt="Product Image"
+                              style="height: 280px; object-fit: cover; width: 100%; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                          
+                          <div class="card-body text-center" style="display: flex; flex-direction: column; justify-content: space-between; flex-grow: 1; padding: 20px; background-color: #fff;">
+                              <h5 class="card-title" style="font-size: 1.3rem; font-weight: bold; color: #ff6f61;">{{ $product->product_name }}</h5>
+                              
+                              <p class="card-text product-desc" style="color: #555; font-size: 0.95rem; flex-grow: 1; line-height: 1.4; padding: 10px; background: rgba(255, 223, 186, 0.2); border-radius: 8px;">
+                                  <b>{{ $product->product_desc }}</b>
+                              </p>
+  
+                              <p class="product-price" style="font-size: 1.4rem; font-weight: bold; color: #333; background: #ff6f61; padding: 10px 20px; border-radius: 30px; color: white; display: inline-block;">
+                                  $200
+                              </p>
+  
+                              <button style="background-color: #ff6f61; color: white; border: none; padding: 10px 20px; border-radius: 30px; font-size: 1rem; cursor: pointer; transition: background 0.3s;">
+                                  Buy Now
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              @endforeach
+          </div><br>
+      @endforeach
+  </div>
+  
+  
+  
+</div>
+@include('auth.ecom_foot')
 
-  <script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
 
-    function plusSlides(n) {
-      showSlides(slideIndex += n);
-    }
+<script>
+  let slideIndex = 0;
+  showSlides();
 
-    function currentSlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
+  function showSlides() {
       let i;
       let slides = document.getElementsByClassName("mySlides");
       let dots = document.getElementsByClassName("dot");
-      if (n > slides.length) {slideIndex = 1}    
-      if (n < 1) {slideIndex = slides.length}
+      
       for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";  
+          slides[i].style.display = "none";  
       }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}    
+
       for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
+          dots[i].className = dots[i].className.replace(" active", "");
       }
-      slides[slideIndex-1].style.display = "block";  
-      dots[slideIndex-1].className += " active";
-    }
-  </script>
+
+      slides[slideIndex - 1].style.display = "block";  
+      dots[slideIndex - 1].className += " active";
+      
+      setTimeout(showSlides, 3000); // Change slide every 3 seconds
+  }
+</script>
+
 </body>
 </html>

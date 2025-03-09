@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EcommerceController extends Controller
 {
@@ -14,8 +15,8 @@ class EcommerceController extends Controller
     {
         $userId = session('user_data.id');
         if($userId){
-           
-            return view('admin.ecommerce_dashboard');
+            $product_details=DB::table('public.product')->orderBy('id','desc')->get();
+            return view('admin.ecommerce_dashboard',compact('product_details'));
         }else{
             return view('auth.login');
         }
